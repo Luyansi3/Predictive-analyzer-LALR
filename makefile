@@ -21,6 +21,4 @@ main.o: main.cpp symbole.h lexer.h etat.h
 
 clean:
 	rm -rf *.o
-
-mrproper: clean
 	rm -rf analyse
