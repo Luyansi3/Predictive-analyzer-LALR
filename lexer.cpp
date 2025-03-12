@@ -7,7 +7,7 @@ Symbole * Lexer::Consulter() {
    // Si aucun symbole n'a été stocké dans le tampon
    if (!tampon) {
       // Si la position "tete" atteint la fin du flux, on crée un symbole FIN
-      if (tete == flux.length()) tampon = new Symbole(FIN);
+      if (tete == (int) flux.length()) tampon = new Symbole(FIN);
       else
       {
          switch (flux[tete]) {

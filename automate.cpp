@@ -1,5 +1,5 @@
 #include "automate.h"
-#include <unistd.h> // Pour certaines fonctions POSIX (ex.: sleep)
+#include <unistd.h> // Pour certaines fonctions POSIX (ex.: sleep) utiliser pour les test (lors de boucle infinis :))
 
 /* -------------------------------
    Constructeur et Destructeur
@@ -20,7 +20,7 @@ Automate::~Automate()
     // Suppression de l'objet lexer
     delete lexer;
     
-    // Libération de la mémoire pour tous les états stockés dans stackstate
+    // Libération de la mémoire pour tous les états stockés dans stackstate (doit normalement être vide)
     for (unsigned int i = 0; i < stackstate.size(); i++) {
         delete stackstate[i];
     }
@@ -58,7 +58,7 @@ void Automate::printStacks(){
 void Automate::lecture(void){
 
     Etat* e0 = new E0;
-    stackstate.push_back(e0);
+    stackstate.push_back(e0); // Push de l'axiome de la grammaire dans la stack
 
     Symbole * s;
     // Boucle de lecture des symboles jusqu'à la fin ou jusqu'à une erreur
@@ -67,7 +67,7 @@ void Automate::lecture(void){
         s = lexer->Consulter();
 
         // Tentative de transition de l'état courant avec le symbole
-        // Si la transition retourne true, on sort de la boucle
+        // Si la transition retourne true, on sort de la boucle car nous sommes arrivé au caractère de fin
         if (stackstate.back()->transition(*this, s)) break;
 
         // Si le lexer a atteint la fin du flux et que bugFlag est activé, on sort également
@@ -96,7 +96,7 @@ void Automate::ignore() {
     }
     // Affiche un caret (^) pour indiquer la position exacte de l'erreur
     cout << "^";
-    // Complète avec des tirets jusqu'à la fin du flux
+
     for (unsigned int i = lexer->getTete(); i < flux.length(); i++) {
         cout << "-";
     }
